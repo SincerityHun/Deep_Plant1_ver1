@@ -9,7 +9,8 @@ class dataTable extends StatefulWidget {
 }
 
 class _dataTableState extends State<dataTable> {
-  var apikey = "58%2FAb40DJd41UCVYmCZM89EUoOWqT0vuObbReDQCI6ufjHIJbhZOUtQnftZErMQf6%2FgEflZVctg97VfdvvtmQw%3D%3D";
+  var apikey =
+      "58%2FAb40DJd41UCVYmCZM89EUoOWqT0vuObbReDQCI6ufjHIJbhZOUtQnftZErMQf6%2FgEflZVctg97VfdvvtmQw%3D%3D";
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -56,14 +57,19 @@ class _dataTableState extends State<dataTable> {
 
     if (weatherData != null) {
       String totalcount = weatherData['response']['body']['pageNo'];
-      String basedate = weatherData['response']['body']['items']['item'][5]['baseDate'];
-      String basetime = weatherData['response']['body']['items']['item'][5]['baseTime'];
-      String obsrvalue = weatherData['response']['body']['items']['item'][5]['obsrValue'];
-      String category = weatherData['response']['body']['items']['item'][5]['category'];
+      String basedate =
+          weatherData['response']['body']['items']['item'][5]['baseDate'];
+      String basetime =
+          weatherData['response']['body']['items']['item'][5]['baseTime'];
+      String obsrvalue =
+          weatherData['response']['body']['items']['item'][5]['obsrValue'];
+      String category =
+          weatherData['response']['body']['items']['item'][5]['category'];
       String nxx = weatherData['response']['body']['items']['item'][5]['nx'];
       String nyy = weatherData['response']['body']['items']['item'][5]['ny'];
 
-      tableData.addAll([totalcount, basedate, basetime, obsrvalue, category, nxx, nyy]);
+      tableData.addAll(
+          [totalcount, basedate, basetime, obsrvalue, category, nxx, nyy]);
       isFinal = true;
     } else {
       isFinal = false;
@@ -76,8 +82,8 @@ class _dataTableState extends State<dataTable> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(right: 20.0),
+        title: const Padding(
+          padding: EdgeInsets.only(right: 20.0),
           child: Text(
             '육류등록',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -92,7 +98,7 @@ class _dataTableState extends State<dataTable> {
             backgroundColor: Colors.white,
             elevation: 0.0,
           ),
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
@@ -104,7 +110,7 @@ class _dataTableState extends State<dataTable> {
               backgroundColor: Colors.white,
               elevation: 0.0,
             ),
-            child: Icon(
+            child: const Icon(
               Icons.close,
               color: Colors.black,
             ),
@@ -115,15 +121,15 @@ class _dataTableState extends State<dataTable> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Column(
           children: [
-            SizedBox(height: 45.0),
-            Text(
+            const SizedBox(height: 45.0),
+            const Text(
               '이력번호 입력',
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               children: [
                 Expanded(
@@ -134,7 +140,7 @@ class _dataTableState extends State<dataTable> {
                       child: TextFormField(
                         controller: _textEditingController,
                         maxLength: 12,
-                        key: ValueKey(1),
+                        key: const ValueKey(1),
                         validator: (value) {
                           if (value!.isEmpty || value.length < 4) {
                             // 임시 지정!!
@@ -150,28 +156,32 @@ class _dataTableState extends State<dataTable> {
                           historyNum = int.parse(value);
                         },
                         decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(width: 0.5, color: Colors.grey),
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(25.0),
                                 )),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(width: 0.5, color: Colors.grey),
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(25.0),
                                 )),
-                            errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(width: 0.5, color: Colors.grey),
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(25.0),
                                 )),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(width: 0.5, color: Colors.grey),
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(25.0),
                                 )),
                             hintText: '이력번호 입력',
-                            contentPadding: EdgeInsets.all(12.0),
+                            contentPadding: const EdgeInsets.all(12.0),
                             fillColor: Colors.grey[200],
                             filled: true),
                         keyboardType: TextInputType.number,
@@ -181,7 +191,7 @@ class _dataTableState extends State<dataTable> {
                 ),
                 Column(children: [
                   Padding(
-                    padding: EdgeInsets.only(right: 15.0),
+                    padding: const EdgeInsets.only(right: 15.0),
                     child: SizedBox(
                       height: 45,
                       width: 85,
@@ -201,11 +211,11 @@ class _dataTableState extends State<dataTable> {
                             borderRadius: BorderRadius.circular(25.0),
                           ),
                         ),
-                        child: Text('검색'),
+                        child: const Text('검색'),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25.0,
                   )
                 ]),
@@ -215,7 +225,8 @@ class _dataTableState extends State<dataTable> {
               height: isFinal ? 25.0 : 400.0,
               width: 350.0,
             ),
-            if (isFinal == true) Expanded(child: View(tableData: tableData, baseData: baseData)),
+            if (isFinal == true)
+              Expanded(child: View(tableData: tableData, baseData: baseData)),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: SizedBox(
@@ -228,7 +239,7 @@ class _dataTableState extends State<dataTable> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       )),
-                  child: Text('다음'),
+                  child: const Text('다음'),
                 ),
               ),
             ),
@@ -259,7 +270,7 @@ class View extends StatelessWidget {
                 fit: FlexFit.tight,
                 child: Container(
                   height: 45.0,
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
                     border: Border.all(
@@ -271,14 +282,14 @@ class View extends StatelessWidget {
                     children: [
                       RichText(
                         text: TextSpan(children: [
-                          WidgetSpan(
+                          const WidgetSpan(
                             child: SizedBox(
                               width: 15,
                             ),
                           ),
                           TextSpan(
                             text: baseData[index],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18.0,
                               color: Colors.black,
                             ),
@@ -294,7 +305,7 @@ class View extends StatelessWidget {
                 fit: FlexFit.tight,
                 child: Container(
                   height: 45.0,
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.grey,
@@ -305,14 +316,14 @@ class View extends StatelessWidget {
                     children: [
                       RichText(
                         text: TextSpan(children: [
-                          WidgetSpan(
+                          const WidgetSpan(
                             child: SizedBox(
                               width: 15,
                             ),
                           ),
                           TextSpan(
                             text: tableData[index],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18.0,
                               color: Colors.black,
                             ),

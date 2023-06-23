@@ -9,7 +9,18 @@ class addiTion extends StatefulWidget {
 
 class _addiTionState extends State<addiTion> {
   final orders = ['소', '돼지'];
-  final largeOrders_1 = ['안심', '등심', '채끝', '목심', '앞다리', '우둔', '설도', '양지', '사태', '갈비'];
+  final largeOrders_1 = [
+    '안심',
+    '등심',
+    '채끝',
+    '목심',
+    '앞다리',
+    '우둔',
+    '설도',
+    '양지',
+    '사태',
+    '갈비'
+  ];
 
   final List<List<String>> tableData = [
     ['안심살'],
@@ -66,8 +77,8 @@ class _addiTionState extends State<addiTion> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(right: 20.0),
+        title: const Padding(
+          padding: EdgeInsets.only(right: 20.0),
           child: Text(
             '육류등록',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -78,25 +89,25 @@ class _addiTionState extends State<addiTion> {
         foregroundColor: Colors.black,
         leading: ElevatedButton(
           onPressed: () {},
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-          ),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,
             elevation: 0.0,
+          ),
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
           ),
         ),
         actions: [
           ElevatedButton(
               onPressed: () {},
-              child: Icon(
-                Icons.close,
-                color: Colors.black,
-              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 elevation: 0.0,
+              ),
+              child: const Icon(
+                Icons.close,
+                color: Colors.black,
               )),
         ],
       ),
@@ -106,8 +117,8 @@ class _addiTionState extends State<addiTion> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              SizedBox(height: 45.0),
-              Align(
+              const SizedBox(height: 45.0),
+              const Align(
                 alignment: Alignment.center,
                 child: Text(
                   '관리번호 생성을 위한',
@@ -117,7 +128,7 @@ class _addiTionState extends State<addiTion> {
                   ),
                 ),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.center,
                 child: Text(
                   '추가 정보를 입력해주세요',
@@ -127,11 +138,11 @@ class _addiTionState extends State<addiTion> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 60.0,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 35.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 35.0),
                 child: Row(
                   children: [
                     Text(
@@ -145,11 +156,11 @@ class _addiTionState extends State<addiTion> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               Container(
-                margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                margin: const EdgeInsets.only(left: 30.0, right: 30.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25.0),
                   border: Border.all(
@@ -158,9 +169,9 @@ class _addiTionState extends State<addiTion> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: DropdownButton(
-                    padding: EdgeInsets.only(left: 25.0),
+                    padding: const EdgeInsets.only(left: 25.0),
                     underline: Container(),
                     alignment: Alignment.center,
                     elevation: 1,
@@ -168,13 +179,13 @@ class _addiTionState extends State<addiTion> {
                     dropdownColor: Colors.grey[100],
                     iconSize: 25.0,
                     isExpanded: true,
-                    hint: Text('종류 선택'),
+                    hint: const Text('종류 선택'),
                     iconEnabledColor: Colors.grey[400],
                     value: selectedOrders,
                     items: orders
                         .map((e) => DropdownMenuItem(
-                              child: Center(child: Text(e)),
                               value: e,
+                              child: Center(child: Text(e)),
                             ))
                         .toList(),
                     onChanged: (value) {
@@ -187,11 +198,11 @@ class _addiTionState extends State<addiTion> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 35.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 35.0),
                 child: Row(
                   children: [
                     Text(
@@ -205,11 +216,11 @@ class _addiTionState extends State<addiTion> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               Container(
-                margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                margin: const EdgeInsets.only(left: 30.0, right: 30.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25.0),
                   border: Border.all(
@@ -218,22 +229,22 @@ class _addiTionState extends State<addiTion> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: DropdownButton(
-                      padding: EdgeInsets.only(left: 25.0),
+                      padding: const EdgeInsets.only(left: 25.0),
                       underline: Container(),
                       alignment: Alignment.center,
                       elevation: 1,
                       borderRadius: BorderRadius.circular(25.0),
                       dropdownColor: Colors.grey[100],
                       isExpanded: true,
-                      hint: Text('대부위 선택'),
+                      hint: const Text('대부위 선택'),
                       iconEnabledColor: Colors.grey[400],
                       value: selectedLarges,
                       items: largeOrders_1
                           .map((e) => DropdownMenuItem(
-                                child: Center(child: Text(e)),
                                 value: e,
+                                child: Center(child: Text(e)),
                               ))
                           .toList(),
                       onChanged: isselectedorder
@@ -248,11 +259,11 @@ class _addiTionState extends State<addiTion> {
                           : null),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               Container(
-                margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                margin: const EdgeInsets.only(left: 30.0, right: 30.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25.0),
                   border: Border.all(
@@ -261,22 +272,22 @@ class _addiTionState extends State<addiTion> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: DropdownButton(
-                      padding: EdgeInsets.only(left: 25.0),
+                      padding: const EdgeInsets.only(left: 25.0),
                       underline: Container(),
                       alignment: Alignment.center,
                       elevation: 1,
                       borderRadius: BorderRadius.circular(25.0),
                       dropdownColor: Colors.grey[100],
                       isExpanded: true,
-                      hint: Text('소부위 선택'),
+                      hint: const Text('소부위 선택'),
                       iconEnabledColor: Colors.grey[400],
                       value: selectedLittles,
                       items: tableData[selectedlarge]
                           .map((e) => DropdownMenuItem(
-                                child: Center(child: Text(e)),
                                 value: e,
+                                child: Center(child: Text(e)),
                               ))
                           .toList(),
                       onChanged: isselectedlarge
@@ -290,11 +301,11 @@ class _addiTionState extends State<addiTion> {
                           : null),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30.0,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 35.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 35.0),
                 child: Row(
                   children: [
                     Text(
@@ -308,7 +319,7 @@ class _addiTionState extends State<addiTion> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15.0,
               ),
               Row(
@@ -317,7 +328,7 @@ class _addiTionState extends State<addiTion> {
                     width: 160.0,
                     height: 50.0,
                     alignment: Alignment.center,
-                    margin: EdgeInsets.only(left: 30.0, right: 10.0),
+                    margin: const EdgeInsets.only(left: 30.0, right: 10.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.0),
                       border: Border.all(
@@ -325,7 +336,7 @@ class _addiTionState extends State<addiTion> {
                         width: 3,
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       '202209191150',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -335,7 +346,7 @@ class _addiTionState extends State<addiTion> {
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 20.0,
                     child: Divider(
                       color: Colors.grey[400],
@@ -346,7 +357,7 @@ class _addiTionState extends State<addiTion> {
                     width: 40.0,
                     height: 50.0,
                     alignment: Alignment.center,
-                    margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                    margin: const EdgeInsets.only(left: 10.0, right: 10.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.0),
                       border: Border.all(
@@ -357,7 +368,7 @@ class _addiTionState extends State<addiTion> {
                     child: Text(
                       '$selectedlarge$selectedlittle',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.w400,
                         color: Colors.black38,
@@ -366,7 +377,7 @@ class _addiTionState extends State<addiTion> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15.0,
               ),
               Padding(
@@ -376,12 +387,12 @@ class _addiTionState extends State<addiTion> {
                   width: 350,
                   child: ElevatedButton(
                     onPressed: isFinal ? () => {} : null,
-                    child: Text('다음'),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey[800],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         )),
+                    child: const Text('다음'),
                   ),
                 ),
               ),
