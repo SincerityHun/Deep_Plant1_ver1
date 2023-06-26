@@ -1,0 +1,6 @@
+Flask
+APScheduler
+firebase-admin
+boto3
+Flask-SQLAlchemy
+pymysql

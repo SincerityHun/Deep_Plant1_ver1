@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:deep_plant_app/source/api_Source.dart';
 
-class dataTable extends StatefulWidget {
-  const dataTable({super.key});
+class apiPage extends StatefulWidget {
+  const apiPage({super.key});
 
   @override
-  State<dataTable> createState() => _dataTableState();
+  State<apiPage> createState() => _apiPageState();
 }
 
+<<<<<<< HEAD
 class _dataTableState extends State<dataTable> {
   var apikey =
       "58%2FAb40DJd41UCVYmCZM89EUoOWqT0vuObbReDQCI6ufjHIJbhZOUtQnftZErMQf6%2FgEflZVctg97VfdvvtmQw%3D%3D";
+=======
+class _apiPageState extends State<apiPage> {
+  var apikey = "58%2FAb40DJd41UCVYmCZM89EUoOWqT0vuObbReDQCI6ufjHIJbhZOUtQnftZErMQf6%2FgEflZVctg97VfdvvtmQw%3D%3D";
+>>>>>>> main
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _textEditingController = TextEditingController();
 
   bool isFinal = false;
+  bool isValue = false;
   int historyNum = 0;
 
   final List<String> tableData = [];
@@ -38,6 +44,11 @@ class _dataTableState extends State<dataTable> {
     final isValid = _formkey.currentState!.validate();
     if (isValid) {
       _formkey.currentState!.save();
+      isValue = true;
+    } else {
+      isValue = false;
+      isFinal = false;
+      tableData.clear();
     }
   }
 
@@ -48,14 +59,15 @@ class _dataTableState extends State<dataTable> {
     var baseTime = "0600";
     var nx = "55";
     var ny = "127";
+    tableData.clear();
 
-    Source source = Source(
-        baseUrl:
-            "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=$apikey&numOfRows=$numOfRows&pageNo=$pageNo&base_date=$baseDate&base_time=$baseTime&nx=$nx&ny=$ny");
+    try {
+      Source source = Source(
+          baseUrl:
+              "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=$apikey&numOfRows=$numOfRows&pageNo=$pageNo&base_date=$baseDate&base_time=$baseTime&nx=$nx&ny=$ny");
 
-    final weatherData = await source.getJsonData();
+      final weatherData = await source.getJsonData();
 
-    if (weatherData != null) {
       String totalcount = weatherData['response']['body']['pageNo'];
       String basedate =
           weatherData['response']['body']['items']['item'][5]['baseDate'];
@@ -71,9 +83,15 @@ class _dataTableState extends State<dataTable> {
       tableData.addAll(
           [totalcount, basedate, basetime, obsrvalue, category, nxx, nyy]);
       isFinal = true;
-    } else {
-      isFinal = false;
+    } catch (e) {
       tableData.clear();
+      isFinal = false;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('이력번호가 잘못되었습니다!'),
+          backgroundColor: Colors.yellow,
+        ),
+      );
     }
   }
 
@@ -140,7 +158,10 @@ class _dataTableState extends State<dataTable> {
                       child: TextFormField(
                         controller: _textEditingController,
                         maxLength: 12,
+<<<<<<< HEAD
                         key: const ValueKey(1),
+=======
+>>>>>>> main
                         validator: (value) {
                           if (value!.isEmpty || value.length < 4) {
                             // 임시 지정!!
@@ -199,7 +220,9 @@ class _dataTableState extends State<dataTable> {
                         onPressed: () async {
                           tableData.clear();
                           _tryValidation();
-                          await fetchData(historyNum);
+                          if (isValue) {
+                            await fetchData(historyNum);
+                          }
                           setState(() {
                             FocusScope.of(context).unfocus();
                             _textEditingController.clear();
@@ -229,6 +252,7 @@ class _dataTableState extends State<dataTable> {
               Expanded(child: View(tableData: tableData, baseData: baseData)),
             Padding(
               padding: const EdgeInsets.all(25.0),
+<<<<<<< HEAD
               child: SizedBox(
                 height: 55,
                 width: 350,
@@ -240,6 +264,22 @@ class _dataTableState extends State<dataTable> {
                         borderRadius: BorderRadius.circular(10.0),
                       )),
                   child: const Text('다음'),
+=======
+              child: Transform.translate(
+                offset: Offset(0, -25),
+                child: SizedBox(
+                  height: 55,
+                  width: 350,
+                  child: ElevatedButton(
+                    onPressed: isFinal ? () => {} : null,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[800],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        )),
+                    child: Text('다음'),
+                  ),
+>>>>>>> main
                 ),
               ),
             ),
