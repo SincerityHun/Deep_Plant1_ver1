@@ -35,7 +35,6 @@ flask run --host=0.0.0.0 --port=8080
 """
 UPDATE_IMAGE_FOLDER_PATH = "./update_images/"
 
-
 class MyFlaskApp:
     def __init__(self, app, config):
         self.app = app
@@ -64,13 +63,14 @@ class MyFlaskApp:
         @self.app.route("/predict", methods=["POST"])
         def predict_db_data():
             return _make_response(self._predict_db_data(), "http://localhost:3000")
-        
+
         @self.app.route("/predict/get", methods=["GET"])
         def get_predict_db_data():
             id = request.args.get("id")
             seqno = request.args.get("seqno")
-            return _make_response(self._get_predict_db_data(id,seqno), "http://localhost:3000")
-        
+            return _make_response(
+                self._get_predict_db_data(id, seqno), "http://localhost:3000"
+            )
 
         @self.app.route("/meat/get", methods=["GET"])  # 1. 전체 meat data 요청
         def get_meat_data():
@@ -829,6 +829,7 @@ class MyFlaskApp:
                 sensory_evals = SensoryEval.query.filter_by(id=id).all()
                 heatedmeat_evals = HeatedmeatSensoryEval.query.filter_by(id=id).all()
                 probexpt_datas = ProbexptData.query.filter_by(id=id).all()
+                # 가열육 데이터 삭제
                 for heatedmeat_eval in heatedmeat_evals:
                     seqno = heatedmeat_eval.seqno
                     rds_db.session.delete(heatedmeat_eval)
@@ -837,23 +838,28 @@ class MyFlaskApp:
                     )
                     rds_db.session.commit()
 
+                # 실험 데이터 삭제
                 for probexpt_data in probexpt_datas:
                     rds_db.session.delete(probexpt_data)
                 rds_db.session.commit()
 
+                # 관능 데이터 삭제 및 관능 이미지 삭제
                 for sensory_eval in sensory_evals:
                     seqno = sensory_eval.seqno
                     rds_db.session.delete(sensory_eval)
                     self.s3_conn.delete_image("sensory_evals", f"{id}-{seqno}")
                     rds_db.session.commit()
 
+                # 육류 데이터 삭제
                 rds_db.session.delete(meat)
+
+                # 큐알 삭제
                 self.s3_conn.delete_image("qr_codes", f"{id}")
                 rds_db.session.commit()
                 return jsonify({"delete Id": id})
             except Exception as e:
                 rds_db.session.rollback()
-                return e
+                abort(404, description=e)
 
     def _delete_specific_seqno_meat_data(self, id, seqno):
         with self.app.app_context():
@@ -896,25 +902,15 @@ class MyFlaskApp:
         # 2. 기본 데이터 받아두기
         data = request.get_json()
         delete_list = list(data.get("delete_id"))
-        delete_success = []
-        delete_failed = []
         try:
             for data in delete_list:
                 result = self._delete_specific_meat_data(data).get_json()
-                if not isinstance(
-                    result, str
-                ):  # if the deletion was successful, result would be the id
-                    delete_success.append(result.get("delete Id"))
-                else:  # if the deletion failed, result would be an error message
-                    delete_failed.append({"id": id, "reason": result})
             return (
-                jsonify(
-                    {"delete_success": delete_list, "delete_failed": delete_failed}
-                ),
+                jsonify({"delete_success": delete_list}),
                 200,
             )
         except Exception as e:
-            abort(404, description=3)
+            abort(404, description=e)
 
     # 2. Statistic API
     def _get_num_of_processed_raw(self, start, end):
@@ -1814,7 +1810,7 @@ class MyFlaskApp:
         print(response_data)
         # Merge the response data with the existing data
         data.update(response_data)
-        
+
         # Change the key name from 'gradeNum' to 'xai_gradeNum'
         if "gradeNum" in data:
             data["xai_gradeNum"] = data.pop("gradeNum")
@@ -1837,19 +1833,20 @@ class MyFlaskApp:
         # 의문점1 : 이거 시간 오바 안 뜨려나?
         # 의문점2 : 로딩창 안 뜨나
 
-    def _get_predict_db_data(self,id,seqno):
+    def _get_predict_db_data(self, id, seqno):
         id = safe_str(id)
         seqno = safe_int(seqno)
         if id is None or seqno is None:
-            abort(404,description="Wrong id or seqno")
+            abort(404, description="Wrong id or seqno")
         try:
-            result = get_AI_SensoryEval(rds_db,id,seqno)
+            result = get_AI_SensoryEval(rds_db, id, seqno)
         except Exception as e:
-            abort(401,description = e)
+            abort(401, description=e)
         if result is not None:
-            return jsonify(result),200
+            return jsonify(result), 200
         else:
-            abort(404,description="No data in AI Sensory Evaluate DB")
+            abort(404, description="No data in AI Sensory Evaluate DB")
+
     # 4. Utils
 
     def transfer_folder_image(self, id, new_meat, folder):
@@ -1890,6 +1887,7 @@ def _make_response(data, url):  # For making response
 
 # Init RDS
 app = Flask(__name__)
+
 myApp = MyFlaskApp(app, db_config.config)
 CORS(myApp.app)
 
@@ -2025,11 +2023,6 @@ def pwd_check():
     return jsonify({"message": f"Valid password for userId:{id}"}), 200
 
 
-def scheduler_function():  # 일정 주기마다 실행하는 함수
-    myApp.firestore_conn.transferDbData()  # (FireStore -> Flask Server)
-    myApp.s3_conn.transferImageData("meats")  # (Flask server(images folder) -> S3)
-    myApp.s3_conn.transferImageData("qr_codes")  # (Flask server(images folder) -> S3)
-    myApp.transfer_data_to_rds()  #  (FireStore -> RDS)
 
 
 # Server 구동
