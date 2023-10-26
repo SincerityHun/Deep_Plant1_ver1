@@ -652,14 +652,11 @@ class MyFlaskApp:
             ).first()  # DB에 있는 육류 정보
             try:
                 if deepAging_data is not None:  # 가공육 관능검사
-                    if meat:  # 승인 정보 확인
-                        if meat.statusType != 2:
-                            abort(404, description="Not confirmed meat data")
                     if sensory_eval:  # 기존 Deep Aging을 수정하는 경우
                         deepAgingId = sensory_eval.deepAgingId
                         new_SensoryEval = create_SensoryEval(
                             rds_db, data, seqno, id, deepAgingId
-                        )
+                        ) 
                         rds_db.session.merge(new_SensoryEval)
                     else:  # 새로운 Deep aging을 추가하는 경우
                         new_DeepAging = create_DeepAging(rds_db, deepAging_data)
@@ -775,6 +772,7 @@ class MyFlaskApp:
                         if existing_DeepAging:
                             for key, value in deepAging_data.items():
                                 setattr(existing_DeepAging, key, value)
+                            rds_db.session.commit()
                         else:
                             abort(
                                 404, description="No deep aging data found for update"
@@ -788,6 +786,7 @@ class MyFlaskApp:
                             rds_db, data, seqno, id, deepAgingId
                         )
                         rds_db.session.merge(new_SensoryEval)
+
                     rds_db.session.commit()
                 else:
                     abort(404, description="No deepaging data in request")
